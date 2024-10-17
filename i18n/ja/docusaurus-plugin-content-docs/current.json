@@ -1,0 +1,18 @@
+{
+  "version.label": {
+    "message": "Next",
+    "description": "The label for version current"
+  },
+  "sidebar.tutorialSidebar.category.Introduction": {
+    "message": "Introduction",
+    "description": "The label for category Introduction in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Introduction.link.generated-index.description": {
+    "message": "5 minutes to learn the most important Docusaurus concepts.",
+    "description": "The generated-index page description for category Introduction in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.UPCX Blockchain": {
+    "message": "UPCX Blockchain",
+    "description": "The label for category UPCX Blockchain in sidebar tutorialSidebar"
+  }
+}

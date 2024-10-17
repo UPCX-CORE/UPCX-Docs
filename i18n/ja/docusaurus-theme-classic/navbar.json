@@ -1,0 +1,22 @@
+{
+  "title": {
+    "message": "UPCX Documentation",
+    "description": "The title in the navbar"
+  },
+  "logo.alt": {
+    "message": "My Site Logo",
+    "description": "The alt text of navbar logo"
+  },
+  "item.label.WhitePaper": {
+    "message": "WhitePaper",
+    "description": "Navbar item with label WhitePaper"
+  },
+  "item.label.Blog": {
+    "message": "Blog",
+    "description": "Navbar item with label Blog"
+  },
+  "item.label.GitHub": {
+    "message": "GitHub",
+    "description": "Navbar item with label GitHub"
+  }
+}
