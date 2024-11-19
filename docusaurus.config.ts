@@ -83,7 +83,7 @@ const config: Config = {
           label: "WhitePaper",
         },
         /*{ to: "/blog", label: "Blog", position: "left" },*/
-        { href: "/api", label: "API", position: "left" },
+        { href: "https://docs.upcx.org/api", label: "API", position: "left" },
         {
           href: "https://github.com/upcx",
           label: "GitHub",
