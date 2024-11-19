@@ -82,13 +82,14 @@ const config: Config = {
           position: "left",
           label: "WhitePaper",
         },
-        { to: "/blog", label: "Blog", position: "left" },
+        /*{ to: "/blog", label: "Blog", position: "left" },*/
+        { href: "/api", label: "API", position: "left" },
         {
-          href: "https://github.com/facebook/docusaurus",
+          href: "https://github.com/upcx",
           label: "GitHub",
           position: "right",
         },
-        {
+        /*{
           type: "localeDropdown",
           position: "right",
           dropdownItemsAfter: [
@@ -97,7 +98,7 @@ const config: Config = {
               label: "Help us translate",
             },
           ],
-        },
+        },*/
       ],
     },
     footer: {
