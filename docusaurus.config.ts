@@ -39,6 +39,7 @@ const config: Config = {
       {
         docs: {
           sidebarPath: "./sidebars.ts",
+          routeBasePath: "paper",
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
@@ -82,8 +83,8 @@ const config: Config = {
           position: "left",
           label: "WhitePaper",
         },
-        /*{ to: "/blog", label: "Blog", position: "left" },*/
-        { href: "https://docs.upcx.org/api", label: "API", position: "left" },
+        /* { to: "/blog", label: "Blog", position: "left" },*/
+        /* { href: "https://docs.upcx.org/api", label: "API", position: "left" },*/
         {
           href: "https://github.com/upcx",
           label: "GitHub",
@@ -108,8 +109,8 @@ const config: Config = {
           title: "Docs",
           items: [
             {
-              label: "Tutorial",
-              to: "/docs/abstract",
+              label: "WhitePaper",
+              to: "/paper/abstract",
             },
           ],
         },

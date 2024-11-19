@@ -6,9 +6,11 @@ import HomepageFeatures from "@site/src/components/HomepageFeatures";
 import Heading from "@theme/Heading";
 
 import styles from "./index.module.css";
+import { useEffect } from "react";
 
 function HomepageHeader() {
   const { siteConfig } = useDocusaurusContext();
+
   return (
     <header className={clsx("hero hero--primary", styles.heroBanner)}>
       <div className="container">
@@ -19,7 +21,7 @@ function HomepageHeader() {
         <div className={styles.buttons}>
           <Link
             className="button button--secondary button--lg"
-            to="/docs/abstract"
+            to="/paper/abstract"
           >
             Go to WhitePaper
           </Link>
@@ -31,7 +33,11 @@ function HomepageHeader() {
 
 export default function Home(): JSX.Element {
   const { siteConfig } = useDocusaurusContext();
-  return (
+  useEffect(() => {
+    window.location.href = "/paper/abstract";
+  }, []);
+  return <></>;
+  /* return (
     <Layout
       title={`${siteConfig.title}`}
       description="Description will go into a meta tag in <head />"
@@ -41,5 +47,5 @@ export default function Home(): JSX.Element {
         <HomepageFeatures />
       </main>
     </Layout>
-  );
+  );*/
 }
