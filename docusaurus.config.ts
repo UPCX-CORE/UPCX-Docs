@@ -35,35 +35,39 @@ const config: Config = {
 
   presets: [
     [
-      "classic",
+      "@docusaurus/preset-classic",
       {
         docs: {
           sidebarPath: "./sidebars.ts",
-          routeBasePath: "paper",
+          path: "./docs/paper",
+          routeBasePath: "/paper",
           // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/",
         },
-        blog: {
+        /*blog: {
           showReadingTime: true,
           feedOptions: {
             type: ["rss", "atom"],
             xslt: true,
           },
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/",
-          // Useful options to enforce blogging best practices
           onInlineTags: "warn",
           onInlineAuthors: "warn",
           onUntruncatedBlogPosts: "warn",
-        },
+        },*/
         theme: {
           customCss: "./src/css/custom.css",
         },
       } satisfies Preset.Options,
+    ],
+  ],
+  plugins: [
+    [
+      "@docusaurus/plugin-content-docs",
+      {
+        id: "developer",
+        path: "./docs/developer",
+        routeBasePath: "/developer",
+        sidebarPath: "./sidebars.ts",
+      },
     ],
   ],
 
@@ -82,6 +86,13 @@ const config: Config = {
           sidebarId: "tutorialSidebar",
           position: "left",
           label: "WhitePaper",
+        },
+        {
+          type: "docSidebar",
+          docsPluginId: "developer",
+          sidebarId: "developerSidebar",
+          position: "left",
+          label: "Developer",
         },
         /* { to: "/blog", label: "Blog", position: "left" },*/
         /* { href: "https://docs.upcx.org/api", label: "API", position: "left" },*/
