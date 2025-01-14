@@ -27,3 +27,19 @@ This model is akin to **Proxy-Upgradable** contracts in EVM. While the core stru
 These are immutable contracts designed for scenarios where security and reliability are paramount. While offering high user trust, they also require careful design as developers cannot make changes once deployed.
 
 UPCX smart contracts provide a range of flexibility levels to cater to various developer and user requirements while ensuring operational efficiency and trust. This approach makes UPCX a versatile blockchain platform for diverse business and application needs.
+
+## **Secured Smart Contract**
+
+A **Secured Smart Contract** is a specialized type of smart contract designed to enhance security and governance by redefining ownership and operational authority. In this model, the **Contract Owner** is not the contract wallet itself but the **issuer** or a wallet designated by the issuer. This structure addresses vulnerabilities commonly associated with traditional contract wallets.
+
+- **Contract Wallet Without a Private Key**
+  When a Secured Smart Contract is deployed, the associated **contract wallet** is created without a **private key**. This ensures that no individual or entity can access or control the wallet through conventional private key mechanisms.
+- **Authority Centralized in `upcx.code`**
+  All operational authority of the contract wallet resides with **`upcx.code`**, the system-level code governing the UPCX blockchain.
+  **`upcx.code`** represents the permissions assigned to the code running within smart contracts. It is designed to prevent unauthorized transfers or misuse of permissions from external actors.This structure guarantees that the execution of smart contracts adheres strictly to predefined conditions and protocols, ensuring that no external party can access the **Active Authority** of the contract wallet. For instance, assets within a contract wallet cannot be moved unless explicitly allowed by the contract’s predefined rules. This design preserves the integrity and security of the contract.
+- **Designated Ownership**
+  While the contract wallet itself is immutable and inaccessible, ownership resides with the **issuer** or a wallet designated during contract creation. This ownership allows the issuer to manage the execution, make updates (if permitted), and oversee the operation of the contract without risking unauthorized access.
+- **Enhanced Security Model**
+  By eliminating private keys and centralizing authority in **`upcx.code`**, Secured Smart Contracts mitigate common vulnerabilities such as key theft, unauthorized access, and misuse of wallet permissions. This ensures that the contract operates securely and as intended, free from external interference.
+
+Secured Smart Contracts are particularly valuable for applications requiring robust security and reliability, such as financial services, asset management, and decentralized services. The integration of **`upcx.code`** as the core authority enhances the overall safety of the UPCX platform while providing a trustworthy environment for users and developers.
