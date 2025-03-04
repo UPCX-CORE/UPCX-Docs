@@ -7,12 +7,12 @@ To use an UPCX blockchain, you need an account. This tutorial introduces account
 
 This tutorial introduces the following key concepts:
 
-- [Accounts](../../glossary/index#account): Accounts control authentication on the blockchain. See the protocol guide on [accounts and permissions ](../../60_protocol-guides/40_accounts_and_permissions.md/#2-accounts) for details about how accounts work. Accounts contain permissions, and permissions have authority
-- [Permission](../../glossary/index/#permission) and [Authority](../../glossary/index/#authority): Permissions control authorization on the blockchain. See the protocol guide on [permissions](../../60_protocol-guides/40_accounts_and_permissions.md/#3-permissions) for details on how permissions use authority to authorize transactions
-- Key Pairs: Paired [public key](../../glossary/index/#public-key) and [private key](../../glossary/index/#private-key) cryptographic keys.
-- [Clupcx](../../glossary/index#clupcx): The command line tool to send commands and requests to nodupcx
-- [Kupcxd](../../glossary/index#kupcxd): A local secure store for private keys
-- [Signing Transactions](../../60_protocol-guides/20_transactions_protocol.md/#22-signed-transaction-instance): Authorizing smart contract action calls
+- [Accounts](#): Accounts control authentication on the blockchain. See the protocol guide on [accounts and permissions ](#) for details about how accounts work. Accounts contain permissions, and permissions have authority
+- [Permission](#) and [Authority](#): Permissions control authorization on the blockchain. See the protocol guide on [permissions](#) for details on how permissions use authority to authorize transactions
+- Key Pairs: Paired [public key](#) and [private key](#) cryptographic keys.
+- [Clupcx](#): The command line tool to send commands and requests to nodupcx
+- [Kupcxd](#): A local secure store for private keys
+- [Signing Transactions](#): Authorizing smart contract action calls
 
 This tutorial shows how to:
 
@@ -33,7 +33,7 @@ This tutorial requires the following:
 A blockchain account has a human readable name which is between 1 and 12 characters in length. Each account identifies a blockchain participant and the permissions of that participant. Permissions control what UPCX accounts can do and how actions are authorized.
 
 [[info]]
-| Alice has an account called Alice. The Alice account by default has two permissions `owner` and `active`. Alice can also add and [customize permissions](../../60_protocol-guides/40_accounts_and_permissions.md/#341-custom-permissions).
+| Alice has an account called Alice. The Alice account by default has two permissions `owner` and `active`. Alice can also add and [customize permissions](#).
 The account and permission is written as:
 
 - Alice@owner
@@ -43,7 +43,7 @@ Deploying a smart contract requires an account; an account can own one smart con
 
 ## About Key Pairs
 
-Accounts are stored on the blockchain with their public keys. The public key is stored on the blockchain and the private key is stored locally in a secure [wallet](../../glossary/index/#wallet), for example [kupcxd](../../glossary/index#kupcxd). Each account requires at _least_ one key pair. The blockchain uses asymmetric cryptography to verify that the account pushing a transaction has signed the transaction with the private key which matches the pubic key stored on the blockchain. This authenticates the pushed transaction. [Clupcx](../../glossary/index#clupcx) commands will automatically look for the private key in the `open` `kupcxd` wallet.
+Accounts are stored on the blockchain with their public keys. The public key is stored on the blockchain and the private key is stored locally in a secure [wallet](#), for example [kupcxd](#). Each account requires at _least_ one key pair. The blockchain uses asymmetric cryptography to verify that the account pushing a transaction has signed the transaction with the private key which matches the pubic key stored on the blockchain. This authenticates the pushed transaction. [Clupcx](#) commands will automatically look for the private key in the `open` `kupcxd` wallet.
 
 Transactions are authorized by the account permission authority.
 
@@ -87,4 +87,4 @@ You can now check the account on the blockchain: [How to get account information
 
 ## What's Next?
 
-Look at how to write smart contracts in the [Smart Contract Guides.](../index.md)
+Look at how to write smart contracts in the [Smart Contract Guides.](../introduction.md)

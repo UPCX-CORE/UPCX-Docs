@@ -10,16 +10,16 @@ UPCX permissions control what an account is authorized to execute on an UPCX blo
 
 This tutorial requires the following:
 
-- Access to a running blockchain. Click on this link for instructions on [running a blockchain](01_before-you-begin/10_running-a-blockchain.md)
-- An UPCX account and access to the account keys. Click on this link for information on [Accounts and Permissions](01_before-you-begin/20_accounts-and-permissions.md)
-- Some knowledge of smart contracts. Follow this link for more information [hello world tutorial.](../30_getting-started-guide/25_hello-world.md)
+- Access to a running blockchain. Click on this link for instructions on [running a blockchain](#)
+- An UPCX account and access to the account keys. Click on this link for information on [Accounts and Permissions](#)
+- Some knowledge of smart contracts. Follow this link for more information [hello world tutorial.](#)
 
 ## What is a Custom Permission
 
 A custom permission is an arbitrarily named permission created and associated with an UPCX account. When an account is created two permissions are created by default; `owner` and `active`. You can create a new permission, a custom permission, as a child permission of `owner`, `active` or another custom permission. Custom permissions require a public and private key pair. Custom permissions may be linked to smart contract actions to specify the permission required to execute that action. UPCX accounts and permissions enable flexible and highly granular control over accounts and smart contract actions.
 
 [[info]]
-| The permission `upcx.code` is a special permission that allows smart contracts to call inline actions. The UPCX blockchain performs an authorization check when an inline action is called from a smart contract. Smart contracts do not have access to account keys so cannot add authorization. Adding `upcx.code` to an account permission provides explicit permission for that account permission to execute an inline action. For information on how to add the `upcx.code` see [clupcx set account permission](https://developers.upcx.io/manuals/upcx/latest/clupcx/command-reference/set/set-account-permission).
+| The permission `upcx.code` is a special permission that allows smart contracts to call inline actions. The UPCX blockchain performs an authorization check when an inline action is called from a smart contract. Smart contracts do not have access to account keys so cannot add authorization. Adding `upcx.code` to an account permission provides explicit permission for that account permission to execute an inline action. For information on how to add the `upcx.code` see [clupcx set account permission](#).
 
 ## Why use a Custom Permission
 
@@ -92,13 +92,13 @@ class [[upcx::contract]] hello : public upcx::contract {
 Deploy this smart contract to your running blockchain.
 
 [[info]]
-| This simple sample smart contract does not do any authorization checking, i.e. does not use `require_auth`. This tutorial demonstrates **native authorization checking**. Click on this link for more information on [securing your contract.](https://developers.upcx.io/manuals/upcx.cdt/latest/best-practices/securing_your_contract/#1-authorization-checks)
+| This simple sample smart contract does not do any authorization checking, i.e. does not use `require_auth`. This tutorial demonstrates **native authorization checking**. Click on this link for more information on [securing your contract.](#)
 
 ## Create Custom Permissions
 
 To use a custom permission you need to create a custom permission.
 
-Create custom permission _customp1_, with the parent `active`, on the _bob_ account using the command [clupcx set account permission](https://developers.upcx.io/manuals/upcx/latest/clupcx/command-reference/set/set-account-permission):
+Create custom permission _customp1_, with the parent `active`, on the _bob_ account using the command [clupcx set account permission](#):
 
 ```shell
 clupcx set account permission bob customp1 UPCX58wmANoBtT7RdPgMRCGDb37tcCQswfwVpj6NzC55D247tTMU9D active -p bob@active
