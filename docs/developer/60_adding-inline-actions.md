@@ -2,7 +2,7 @@
 sidebar_position: 6
 ---
 
-# Adding inline Actions
+# 07. Adding inline Actions
 
 This tutorial shows how to call inline actions from a smart contract.
 

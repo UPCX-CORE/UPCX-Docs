@@ -2,7 +2,7 @@
 sidebar_position: 8
 ---
 
-# Creating and Linking Custom Permissions
+# 09. Creating and Linking Custom Permissions
 
 UPCX permissions control what an account is authorized to execute on an UPCX blockchain. UPCX permissions are powerful, flexible, and customizable. This tutorial explains custom permissions and illustrates how to use them. In the tutorial you will create a custom permission, link a permission to an action, unlink a permission from an action, and delete a custom permission.
 

@@ -2,7 +2,7 @@
 sidebar_position: 10
 ---
 
-# SSCO JS Library
+# 11. SSCO JS Library
 
 To compile upcx smart contract, we provide js libary named scco`(Smart Contract Compile)`.
 

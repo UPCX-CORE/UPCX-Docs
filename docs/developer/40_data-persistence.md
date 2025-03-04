@@ -2,7 +2,7 @@
 sidebar_position: 4
 ---
 
-# Data Persistence
+# 05. Data Persistence
 
 This tutorial shows how to persist data used by smart contracts.
 

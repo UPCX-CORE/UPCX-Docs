@@ -97,7 +97,7 @@ const config: Config = {
         /* { to: "/blog", label: "Blog", position: "left" },*/
         /* { href: "https://docs.upcx.org/api", label: "API", position: "left" },*/
         {
-          href: "https://github.com/upcx",
+          href: "https://github.com/UPCX-TEAM-B",
           label: "GitHub",
           position: "right",
         },
@@ -117,46 +117,51 @@ const config: Config = {
       style: "dark",
       links: [
         {
+          title: "Community",
+          items: [
+            {
+              label: "E-Mail",
+              href: "mailto:tech-admin@upcx.org",
+            },
+            {
+              label: "Medium",
+              href: "https://medium.com/@UPCX-Platforms",
+            },
+            {
+              label: "Telegram",
+              href: "https://t.me/UPCXofficial",
+            },
+            {
+              label: "Discord",
+              href: "http://dsc.gg/upcx",
+            },
+          ],
+        },
+        {
           title: "Docs",
           items: [
             {
               label: "WhitePaper",
               to: "/paper/abstract",
             },
-          ],
-        },
-        {
-          title: "Community",
-          items: [
             {
-              label: "Stack Overflow",
-              href: "https://stackoverflow.com/questions/tagged/docusaurus",
-            },
-            {
-              label: "Discord",
-              href: "https://discordapp.com/invite/docusaurus",
-            },
-            {
-              label: "Twitter",
-              href: "https://twitter.com/docusaurus",
+              label: "Developer",
+              to: "/developer/introduction",
             },
           ],
         },
+
         {
           title: "More",
           items: [
             {
-              label: "Blog",
-              to: "/blog",
-            },
-            {
               label: "GitHub",
-              href: "https://github.com/facebook/docusaurus",
+              href: "https://github.com/UPCX-TEAM-B",
             },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+      copyright: `Copyright © 2020-2025 UPCX-PLATFORMS PTE. LTD.`,
     },
     prism: {
       theme: prismThemes.github,

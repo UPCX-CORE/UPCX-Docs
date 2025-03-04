@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-# Deploy, Issue and Transfer tokens
+# 03. Deploy, Issue and Transfer tokens
 
 This tutorial introduces the concept of tokens, the `upcx.token` smart contract and then uses `clupcx` to call `upcx.token` actions.
 
@@ -17,7 +17,7 @@ cd CONTRACTS_DIR
 Pull the source
 
 ```shell
-git clone https://github.com/UPCX/upcx.contracts --branch v1.7.0 --single-branch
+git clone https://github.com/UPCX-TEAM-B/upcx.contracts --branch v1.7.0 --single-branch
 ```
 
 This repository contains several contracts, but it's the `upcx.token` contract that is important for this section. Navigate to the `upcx.contracts/contracts/upcx.token` directory.

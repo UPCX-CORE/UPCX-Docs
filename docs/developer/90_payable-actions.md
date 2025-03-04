@@ -2,7 +2,7 @@
 sidebar_position: 9
 ---
 
-# Payable Actions
+# 10. Payable Actions
 
 This tutorial shows how to write a smart contract that has payable actions.
 

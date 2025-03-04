@@ -2,7 +2,7 @@
 sidebar_position: 5
 ---
 
-# Secondary Indices
+# 06. Secondary Indices
 
 This tutorial shows how to persist data used by smart contracts and create many indexes to access that data.
 

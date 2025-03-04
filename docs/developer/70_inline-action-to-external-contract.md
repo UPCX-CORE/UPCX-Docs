@@ -2,7 +2,7 @@
 sidebar_position: 7
 ---
 
-# Inline Actions to External Contracts
+# 08. Inline Actions to External Contracts
 
 This tutorial shows how to call inline actions from another smart contract.
 

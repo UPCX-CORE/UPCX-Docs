@@ -2,7 +2,7 @@
 sidebar_position: 0
 ---
 
-# Introduction
+# 01. Introduction
 
 The Smart Contract Guides section introduces many UPCX concepts used in smart contract development. Follow these tutorials and learn the core features of smart contract development. The tutorials take you step by step through each topic and at the end of each tutorial you will have the knowledge to apply these to your own smart contract.
 
