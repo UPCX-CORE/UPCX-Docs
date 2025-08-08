@@ -17,7 +17,7 @@ cd CONTRACTS_DIR
 Pull the source
 
 ```shell
-git clone https://github.com/UPCX-TEAM-B/upcx.contracts --branch v1.7.0 --single-branch
+git clone https://github.com/UPCX-Core/upcx.contracts --branch v1.7.0 --single-branch
 ```
 
 This repository contains several contracts, but it's the `upcx.token` contract that is important for this section. Navigate to the `upcx.contracts/contracts/upcx.token` directory.

@@ -1,0 +1,3331 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "UPCX API",
+    "description": "OAS 3.0 Nodupcx UPCX API Specification\r",
+    "version": "1.0.0",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    },
+    "contact": {
+      "url": "https://upcx.io"
+    }
+  },
+  "servers": [
+    {
+      "url": "{protocol}://{host}:{port}/v1/chain",
+      "variables": {
+        "protocol": {
+          "enum": [
+            "http",
+            "https"
+          ],
+          "default": "http"
+        },
+        "host": {
+          "default": "localhost"
+        },
+        "port": {
+          "default": "8080"
+        }
+      }
+    }
+  ],
+  "tags": [
+    {
+      "name": "Chain APIs"
+    },
+    {
+      "name": "Producer APIs"
+    },
+    {
+      "name": "Net APIs"
+    },
+    {
+      "name": "Trace APIs"
+    },
+    {
+      "name": "DB Size APIs"
+    }
+  ],
+  "components": {
+    "schemas": {}
+  },
+  "paths": {
+    "/get_account": {
+      "post": {
+        "tags": [
+          "Chain APIs"
+        ],
+        "description": "Returns an object containing various details about a specific account on the blockchain.",
+        "operationId": "get_account",
+        "requestBody": {
+          "description": "JSON object with the account name to query",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "account_name"
+                ],
+                "properties": {
+                  "account_name": {
+                    "type": "string",
+                    "pattern": "^[a-z1-5.]{1,12}$",
+                    "description": "UPCX-style account name (1-12 characters)",
+                    "example": "alice"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Account information successfully retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "account_name": {
+                      "type": "string",
+                      "example": "alice"
+                    },
+                    "head_block_num": {
+                      "type": "integer",
+                      "example": 123456
+                    },
+                    "head_block_time": {
+                      "type": "string",
+                      "format": "date-time",
+                      "example": "2024-03-26T12:34:56.000"
+                    },
+                    "privileged": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "last_code_update": {
+                      "type": "string",
+                      "format": "date-time",
+                      "example": "2024-01-01T00:00:00.000"
+                    },
+                    "created": {
+                      "type": "string",
+                      "format": "date-time",
+                      "example": "2023-01-01T00:00:00.000"
+                    },
+                    "core_liquid_balance": {
+                      "type": "string",
+                      "example": "100.0000 UPC"
+                    },
+                    "ram_quota": {
+                      "type": "integer",
+                      "example": 8192
+                    },
+                    "net_weight": {
+                      "type": "integer",
+                      "example": 1000
+                    },
+                    "cpu_weight": {
+                      "type": "integer",
+                      "example": 1000
+                    },
+                    "net_limit": {
+                      "type": "object",
+                      "properties": {
+                        "used": {
+                          "type": "integer",
+                          "example": 500
+                        },
+                        "available": {
+                          "type": "integer",
+                          "example": 5000
+                        },
+                        "max": {
+                          "type": "integer",
+                          "example": 5500
+                        }
+                      }
+                    },
+                    "cpu_limit": {
+                      "type": "object",
+                      "properties": {
+                        "used": {
+                          "type": "integer",
+                          "example": 100
+                        },
+                        "available": {
+                          "type": "integer",
+                          "example": 10000
+                        },
+                        "max": {
+                          "type": "integer",
+                          "example": 10100
+                        }
+                      }
+                    },
+                    "permissions": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "perm_name": {
+                            "type": "string",
+                            "example": "active"
+                          },
+                          "parent": {
+                            "type": "string",
+                            "example": "owner"
+                          },
+                          "required_auth": {
+                            "type": "object",
+                            "properties": {
+                              "threshold": {
+                                "type": "integer",
+                                "example": 1
+                              },
+                              "keys": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "key": {
+                                      "type": "string",
+                                      "example": "UPC6MRy..."
+                                    },
+                                    "weight": {
+                                      "type": "integer",
+                                      "example": 1
+                                    }
+                                  }
+                                }
+                              },
+                              "accounts": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "permission": {
+                                      "type": "object",
+                                      "properties": {
+                                        "actor": {
+                                          "type": "string",
+                                          "example": "alice"
+                                        },
+                                        "permission": {
+                                          "type": "string",
+                                          "example": "active"
+                                        }
+                                      }
+                                    },
+                                    "weight": {
+                                      "type": "integer",
+                                      "example": 1
+                                    }
+                                  }
+                                }
+                              },
+                              "waits": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "wait_sec": {
+                                      "type": "integer",
+                                      "example": 0
+                                    },
+                                    "weight": {
+                                      "type": "integer",
+                                      "example": 1
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get_block": {
+      "post": {
+        "tags": [
+          "Chain APIs"
+        ],
+        "description": "Returns an object containing various details about a specific block on the blockchain.",
+        "operationId": "get_block",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "block_num_or_id"
+                ],
+                "properties": {
+                  "block_num_or_id": {
+                    "type": "string",
+                    "description": "Provide a `block number` or a `block id`",
+                    "example": "0000000001a2b3c4"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time",
+                      "example": "2024-03-26T12:34:56.000"
+                    },
+                    "producer": {
+                      "type": "string",
+                      "example": "upcx.producer"
+                    },
+                    "confirmed": {
+                      "type": "integer",
+                      "example": 0
+                    },
+                    "previous": {
+                      "type": "string",
+                      "example": "0000000001a2b3c3"
+                    },
+                    "transaction_mroot": {
+                      "type": "string",
+                      "example": "abc123..."
+                    },
+                    "action_mroot": {
+                      "type": "string",
+                      "example": "def456..."
+                    },
+                    "schedule_version": {
+                      "type": "integer",
+                      "example": 2
+                    },
+                    "producer_signature": {
+                      "type": "string",
+                      "example": "SIG_K1_Kf2o3r..."
+                    },
+                    "transactions": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "status": {
+                            "type": "string",
+                            "example": "executed"
+                          },
+                          "cpu_usage_us": {
+                            "type": "integer",
+                            "example": 500
+                          },
+                          "net_usage_words": {
+                            "type": "integer",
+                            "example": 30
+                          },
+                          "trx": {
+                            "oneOf": [
+                              {
+                                "type": "string",
+                                "example": "abcdef123456..."
+                              },
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "signatures": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string",
+                                      "example": "SIG_K1_..."
+                                    }
+                                  },
+                                  "compression": {
+                                    "type": "string",
+                                    "example": "none"
+                                  },
+                                  "packed_context_free_data": {
+                                    "type": "string"
+                                  },
+                                  "packed_trx": {
+                                    "type": "string"
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    },
+                    "id": {
+                      "type": "string",
+                      "example": "0000000001a2b3c4"
+                    },
+                    "block_num": {
+                      "type": "integer",
+                      "example": 123456
+                    },
+                    "ref_block_prefix": {
+                      "type": "integer",
+                      "example": 987654321
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get_block_info": {
+      "post": {
+        "tags": [
+          "Chain APIs"
+        ],
+        "description": "Similar to `get_block` but returns a fixed-size smaller subset of the block data.",
+        "operationId": "get_block_info",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "block_num"
+                ],
+                "properties": {
+                  "block_num": {
+                    "type": "integer",
+                    "description": "Provide a `block number`",
+                    "example": 123456
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time",
+                      "example": "2024-03-26T12:34:56.000"
+                    },
+                    "producer": {
+                      "type": "string",
+                      "example": "upcx.producer"
+                    },
+                    "confirmed": {
+                      "type": "integer",
+                      "example": 0
+                    },
+                    "previous": {
+                      "type": "string",
+                      "example": "0000000001a2b3c3"
+                    },
+                    "transaction_mroot": {
+                      "type": "string",
+                      "example": "abc123..."
+                    },
+                    "action_mroot": {
+                      "type": "string",
+                      "example": "def456..."
+                    },
+                    "schedule_version": {
+                      "type": "integer",
+                      "example": 2
+                    },
+                    "producer_signature": {
+                      "type": "string",
+                      "example": "SIG_K1_Kf2o3r..."
+                    },
+                    "id": {
+                      "type": "string",
+                      "example": "0000000001a2b3c4"
+                    },
+                    "block_num": {
+                      "type": "integer",
+                      "example": 123456
+                    },
+                    "ref_block_prefix": {
+                      "type": "integer",
+                      "example": 987654321
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get_info": {
+      "post": {
+        "tags": [
+          "Chain APIs"
+        ],
+        "description": "Returns an object containing various details about the blockchain.",
+        "operationId": "get_info",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "server_version": {
+                      "type": "string",
+                      "example": "v2.1.0"
+                    },
+                    "chain_id": {
+                      "type": "string",
+                      "example": "cf057bbfb726..."
+                    },
+                    "head_block_num": {
+                      "type": "integer",
+                      "example": 150000
+                    },
+                    "last_irreversible_block_num": {
+                      "type": "integer",
+                      "example": 149900
+                    },
+                    "last_irreversible_block_id": {
+                      "type": "string",
+                      "example": "00024d36..."
+                    },
+                    "head_block_id": {
+                      "type": "string",
+                      "example": "00024da0..."
+                    },
+                    "head_block_time": {
+                      "type": "string",
+                      "format": "date-time",
+                      "example": "2024-03-26T12:34:56.000"
+                    },
+                    "head_block_producer": {
+                      "type": "string",
+                      "example": "upcx.producer"
+                    },
+                    "virtual_block_cpu_limit": {
+                      "type": "integer",
+                      "example": 200000
+                    },
+                    "virtual_block_net_limit": {
+                      "type": "integer",
+                      "example": 1048576
+                    },
+                    "block_cpu_limit": {
+                      "type": "integer",
+                      "example": 200000
+                    },
+                    "block_net_limit": {
+                      "type": "integer",
+                      "example": 1048576
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/push_transaction": {
+      "post": {
+        "tags": [
+          "Chain APIs"
+        ],
+        "description": "This method expects a transaction in JSON format and will attempt to apply it to the blockchain.",
+        "operationId": "push_transaction",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "signatures",
+                  "compression",
+                  "packed_context_free_data",
+                  "packed_trx"
+                ],
+                "properties": {
+                  "signatures": {
+                    "type": "array",
+                    "description": "Array of signatures required to authorize transaction",
+                    "items": {
+                      "type": "string",
+                      "example": "SIG_K1_Kabcd..."
+                    }
+                  },
+                  "compression": {
+                    "type": "string",
+                    "description": "Compression used, typically \"none\" or \"zlib\"",
+                    "example": "none"
+                  },
+                  "packed_context_free_data": {
+                    "type": "string",
+                    "description": "Base64-encoded context-free data (if any)",
+                    "example": ""
+                  },
+                  "packed_trx": {
+                    "type": "string",
+                    "description": "Base64-encoded packed transaction",
+                    "example": "9f4c4..."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully pushed transaction",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "transaction_id": {
+                      "type": "string",
+                      "example": "d34db33fcafebabe1234567890abcdef"
+                    },
+                    "processed": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "string",
+                          "example": "executed"
+                        },
+                        "cpu_usage_us": {
+                          "type": "integer",
+                          "example": 530
+                        },
+                        "net_usage_words": {
+                          "type": "integer",
+                          "example": 20
+                        },
+                        "action_traces": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "receipt": {
+                                "type": "object",
+                                "properties": {
+                                  "receiver": {
+                                    "type": "string",
+                                    "example": "upcx.token"
+                                  },
+                                  "act_digest": {
+                                    "type": "string",
+                                    "example": "abc123..."
+                                  },
+                                  "global_sequence": {
+                                    "type": "integer",
+                                    "example": 123456789
+                                  }
+                                }
+                              },
+                              "act": {
+                                "type": "object",
+                                "properties": {
+                                  "account": {
+                                    "type": "string",
+                                    "example": "upcx.token"
+                                  },
+                                  "name": {
+                                    "type": "string",
+                                    "example": "transfer"
+                                  },
+                                  "authorization": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "actor": {
+                                          "type": "string",
+                                          "example": "alice"
+                                        },
+                                        "permission": {
+                                          "type": "string",
+                                          "example": "active"
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "data": {
+                                    "type": "object",
+                                    "example": {
+                                      "from": "alice",
+                                      "to": "bob",
+                                      "quantity": "10.0000 UPC",
+                                      "memo": "thanks"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/send_transaction": {
+      "post": {
+        "tags": [
+          "Chain APIs"
+        ],
+        "description": "Submits a transaction to the blockchain and returns the result.",
+        "operationId": "send_transaction",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "signatures",
+                  "compression",
+                  "packed_context_free_data",
+                  "packed_trx"
+                ],
+                "properties": {
+                  "signatures": {
+                    "type": "array",
+                    "description": "Signatures required to authorize the transaction",
+                    "items": {
+                      "type": "string",
+                      "example": "SIG_K1_Kabcd..."
+                    }
+                  },
+                  "compression": {
+                    "type": "string",
+                    "description": "Compression method used (e.g., none, zlib)",
+                    "example": "none"
+                  },
+                  "packed_context_free_data": {
+                    "type": "string",
+                    "description": "Base64-encoded context-free data",
+                    "example": ""
+                  },
+                  "packed_trx": {
+                    "type": "string",
+                    "description": "Base64-encoded packed transaction",
+                    "example": "abc123..."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Transaction successfully submitted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "transaction_id": {
+                      "type": "string",
+                      "example": "abcdef1234567890abcdef1234567890"
+                    },
+                    "processed": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "string",
+                          "example": "executed"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/push_transactions": {
+      "post": {
+        "tags": [
+          "Chain APIs"
+        ],
+        "description": "Pushes multiple transactions to the blockchain in a single call.",
+        "operationId": "push_transactions",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "signatures",
+                    "compression",
+                    "packed_context_free_data",
+                    "packed_trx"
+                  ],
+                  "properties": {
+                    "signatures": {
+                      "type": "array",
+                      "description": "Signatures required for the transaction",
+                      "items": {
+                        "type": "string",
+                        "example": "SIG_K1_Kxyz..."
+                      }
+                    },
+                    "compression": {
+                      "type": "string",
+                      "description": "Compression method used",
+                      "example": "none"
+                    },
+                    "packed_context_free_data": {
+                      "type": "string",
+                      "description": "Context-free data in base64",
+                      "example": ""
+                    },
+                    "packed_trx": {
+                      "type": "string",
+                      "description": "Packed transaction in base64",
+                      "example": "xyz987..."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Array of transaction results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "transaction_id": {
+                        "type": "string",
+                        "example": "feedfacecafebeef1234567890abcdef"
+                      },
+                      "processed": {
+                        "type": "object",
+                        "properties": {
+                          "status": {
+                            "type": "string",
+                            "example": "executed"
+                          },
+                          "cpu_usage_us": {
+                            "type": "integer",
+                            "example": 400
+                          },
+                          "net_usage_words": {
+                            "type": "integer",
+                            "example": 18
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get_block_header_state": {
+      "post": {
+        "tags": [
+          "Chain APIs"
+        ],
+        "description": "Returns the block header state for a specific block by number or ID.",
+        "operationId": "get_block_header_state",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "block_num_or_id"
+                ],
+                "properties": {
+                  "block_num_or_id": {
+                    "type": "string",
+                    "description": "Provide a block number or block ID",
+                    "example": "0000000001a2b3c4"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Block header state returned successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "Block ID",
+                      "example": "0000000001a2b3c4"
+                    },
+                    "block_num": {
+                      "type": "integer",
+                      "description": "Block number",
+                      "example": 123456
+                    },
+                    "header": {
+                      "type": "object",
+                      "description": "The signed block header",
+                      "properties": {
+                        "timestamp": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-03-26T12:34:56.000"
+                        },
+                        "producer": {
+                          "type": "string",
+                          "example": "upcx.producer"
+                        },
+                        "confirmed": {
+                          "type": "integer",
+                          "example": 0
+                        },
+                        "previous": {
+                          "type": "string",
+                          "example": "0000000001a2b3c3"
+                        },
+                        "transaction_mroot": {
+                          "type": "string",
+                          "example": "abc123..."
+                        },
+                        "action_mroot": {
+                          "type": "string",
+                          "example": "def456..."
+                        },
+                        "schedule_version": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "producer_signature": {
+                          "type": "string",
+                          "example": "SIG_K1_Kabcd..."
+                        }
+                      }
+                    },
+                    "active_schedule": {
+                      "type": "object",
+                      "description": "Active producer schedule",
+                      "properties": {
+                        "version": {
+                          "type": "integer",
+                          "example": 3
+                        },
+                        "producers": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "producer_name": {
+                                "type": "string",
+                                "example": "upcx.producer"
+                              },
+                              "block_signing_key": {
+                                "type": "string",
+                                "example": "UPC6MRy..."
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "pending_schedule": {
+                      "type": "object",
+                      "description": "Pending producer schedule",
+                      "properties": {
+                        "schedule": {
+                          "type": "object",
+                          "properties": {
+                            "version": {
+                              "type": "integer",
+                              "example": 4
+                            },
+                            "producers": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "producer_name": {
+                                    "type": "string",
+                                    "example": "upcx.other"
+                                  },
+                                  "block_signing_key": {
+                                    "type": "string",
+                                    "example": "UPC7abcd..."
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "block_signing_key": {
+                      "type": "string",
+                      "description": "The signing key used",
+                      "example": "UPC6MRy..."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get_abi": {
+      "post": {
+        "tags": [
+          "Chain APIs"
+        ],
+        "description": "Returns the ABI (Application Binary Interface) of an account.",
+        "operationId": "get_abi",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "account_name"
+                ],
+                "properties": {
+                  "account_name": {
+                    "type": "string",
+                    "example": "upcx.token"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "ABI information for the account",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "account_name": {
+                      "type": "string",
+                      "example": "upcx.token"
+                    },
+                    "abi": {
+                      "type": "object",
+                      "description": "The ABI definition (simplified here)",
+                      "example": {
+                        "version": "upcx::abi/1.1",
+                        "types": [],
+                        "structs": [],
+                        "actions": [],
+                        "tables": []
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get_currency_balance": {
+      "post": {
+        "tags": [
+          "Chain APIs"
+        ],
+        "description": "Get current token balance of an account for a specific token contract and symbol.",
+        "operationId": "get_currency_balance",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "code",
+                  "account"
+                ],
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "example": "upcx.token"
+                  },
+                  "account": {
+                    "type": "string",
+                    "example": "alice"
+                  },
+                  "symbol": {
+                    "type": "string",
+                    "example": "UPC"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of token balances",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "example": "100.0000 UPC"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get_currency_stats": {
+      "post": {
+        "tags": [
+          "Chain APIs"
+        ],
+        "description": "Get stats about a currency including supply and issuer.",
+        "operationId": "get_currency_stats",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "code",
+                  "symbol"
+                ],
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "example": "upcx.token"
+                  },
+                  "symbol": {
+                    "type": "string",
+                    "example": "UPC"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Currency statistics",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "object",
+                    "properties": {
+                      "supply": {
+                        "type": "string",
+                        "example": "1000000.0000 UPC"
+                      },
+                      "max_supply": {
+                        "type": "string",
+                        "example": "1000000000.0000 UPC"
+                      },
+                      "issuer": {
+                        "type": "string",
+                        "example": "upcx"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get_required_keys": {
+      "post": {
+        "tags": [
+          "Chain APIs"
+        ],
+        "description": "Given a transaction and available keys, returns required signing keys.",
+        "operationId": "get_required_keys",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "transaction",
+                  "available_keys"
+                ],
+                "properties": {
+                  "transaction": {
+                    "type": "object",
+                    "description": "Full transaction object",
+                    "example": {
+                      "ref_block_num": 123,
+                      "ref_block_prefix": 4567890,
+                      "expiration": "2024-03-27T12:00:00",
+                      "actions": []
+                    }
+                  },
+                  "available_keys": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "example": "UPC6MRy..."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Required signing keys",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "required_keys": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "example": "UPC6MRy..."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get_producers": {
+      "post": {
+        "tags": [
+          "Chain APIs"
+        ],
+        "description": "Get a list of registered producers sorted by vote weight.",
+        "operationId": "get_producers",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "json": {
+                    "type": "boolean",
+                    "default": true
+                  },
+                  "lower_bound": {
+                    "type": "string",
+                    "example": ""
+                  },
+                  "limit": {
+                    "type": "integer",
+                    "default": 50
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Producer list returned",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "rows": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "owner": {
+                            "type": "string",
+                            "example": "upcx.producer"
+                          },
+                          "total_votes": {
+                            "type": "string",
+                            "example": "100000000.00000000000000000"
+                          },
+                          "is_active": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "producer_key": {
+                            "type": "string",
+                            "example": "UPC6MRy..."
+                          },
+                          "url": {
+                            "type": "string",
+                            "example": "http://producer.example.com"
+                          }
+                        }
+                      }
+                    },
+                    "total_producer_vote_weight": {
+                      "type": "string",
+                      "example": "100000000.00000000000000000"
+                    },
+                    "more": {
+                      "type": "string",
+                      "example": ""
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get_raw_code_and_abi": {
+      "post": {
+        "tags": [
+          "Chain APIs"
+        ],
+        "description": "Returns the raw WASM code and ABI for an account.",
+        "operationId": "get_raw_code_and_abi",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "account_name"
+                ],
+                "properties": {
+                  "account_name": {
+                    "type": "string",
+                    "example": "upcx.token"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Raw WASM code and ABI returned",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "account_name": {
+                      "type": "string",
+                      "example": "upcx.token"
+                    },
+                    "wasm": {
+                      "type": "string",
+                      "description": "Raw WASM (base64-encoded)",
+                      "example": "AGFzbQEAAAAB..."
+                    },
+                    "abi": {
+                      "type": "object",
+                      "example": {
+                        "version": "upcx::abi/1.1",
+                        "types": [],
+                        "structs": [],
+                        "actions": []
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get_table_by_scope": {
+      "post": {
+        "tags": [
+          "Chain APIs"
+        ],
+        "description": "Returns table rows grouped by scope.",
+        "operationId": "get_table_by_scope",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "code",
+                  "table"
+                ],
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "example": "upcx.token"
+                  },
+                  "table": {
+                    "type": "string",
+                    "example": "accounts"
+                  },
+                  "lower_bound": {
+                    "type": "string",
+                    "example": ""
+                  },
+                  "upper_bound": {
+                    "type": "string",
+                    "example": ""
+                  },
+                  "limit": {
+                    "type": "integer",
+                    "example": 10
+                  },
+                  "reverse": {
+                    "type": "boolean",
+                    "example": false
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Table scopes returned",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "rows": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "scope": {
+                            "type": "string",
+                            "example": "alice"
+                          },
+                          "payer": {
+                            "type": "string",
+                            "example": "upcx.token"
+                          },
+                          "count": {
+                            "type": "integer",
+                            "example": 1
+                          }
+                        }
+                      }
+                    },
+                    "more": {
+                      "type": "string",
+                      "example": ""
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get_table_rows": {
+      "post": {
+        "tags": [
+          "Chain APIs"
+        ],
+        "description": "Returns an object containing rows from the specified table.",
+        "operationId": "get_table_rows",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "code",
+                  "table",
+                  "scope"
+                ],
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "description": "The name of the smart contract that controls the provided table"
+                  },
+                  "table": {
+                    "type": "string",
+                    "description": "The name of the table to query"
+                  },
+                  "scope": {
+                    "type": "string",
+                    "description": "The account to which this data belongs"
+                  },
+                  "index_position": {
+                    "type": "string",
+                    "description": "Position of the index used, accepted parameters `primary`, `secondary`, `tertiary`, `fourth`, `fifth`, `sixth`, `seventh`, `eighth`, `ninth` , `tenth`"
+                  },
+                  "key_type": {
+                    "type": "string",
+                    "description": "Type of key specified by index_position (for example - `uint64_t` or `name`)"
+                  },
+                  "encode_type": {
+                    "type": "string"
+                  },
+                  "lower_bound": {
+                    "type": "string",
+                    "description": "Filters results to return the first element that is not less than provided value in set"
+                  },
+                  "upper_bound": {
+                    "type": "string",
+                    "description": "Filters results to return the first element that is greater than provided value in set"
+                  },
+                  "limit": {
+                    "type": "integer",
+                    "description": "Limit number of results returned.",
+                    "format": "int32",
+                    "default": 10
+                  },
+                  "reverse": {
+                    "type": "boolean",
+                    "description": "Reverse the order of returned results",
+                    "default": false
+                  },
+                  "show_payer": {
+                    "type": "boolean",
+                    "description": "Show RAM payer",
+                    "default": false
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "rows": {
+                      "type": "array",
+                      "items": {}
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get_kv_table_rows": {
+      "post": {
+        "tags": [
+          "Chain APIs"
+        ],
+        "description": "Returns an object containing rows from the specified kv table.",
+        "operationId": "get_kv_table_rows",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "code",
+                  "table",
+                  "index_name"
+                ],
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "description": "The name of the smart contract that controls the provided kv table"
+                  },
+                  "table": {
+                    "type": "string",
+                    "description": "The name of the kv table to query"
+                  },
+                  "index_name": {
+                    "type": "string",
+                    "description": "The name of primary or secondary index"
+                  },
+                  "encode_type": {
+                    "type": "string",
+                    "description": "Type of key specified by index_position (for example - `uint64_t` or `name`)"
+                  },
+                  "index_value": {
+                    "type": "string",
+                    "description": "index value used for point query encoded as 'encode_type'"
+                  },
+                  "lower_bound": {
+                    "type": "string",
+                    "description": "lower bound index value for ranged query. Query result includes rows specified with lower_bound"
+                  },
+                  "upper_bound": {
+                    "type": "string",
+                    "description": "upper bound index value for ranged query. Query result doesn't include rows specified with upper_bound"
+                  },
+                  "limit": {
+                    "type": "integer",
+                    "description": "Limit number of results returned.",
+                    "format": "int32"
+                  },
+                  "reverse": {
+                    "type": "boolean",
+                    "description": "Reverse the order of returned results"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "rows": {
+                      "type": "array",
+                      "items": {}
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/abi_json_to_bin": {
+      "post": {
+        "tags": [
+          "Chain APIs"
+        ],
+        "description": "Converts action JSON to binary format using ABI.",
+        "operationId": "abi_json_to_bin",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "code",
+                  "action",
+                  "args"
+                ],
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "example": "upcx.token"
+                  },
+                  "action": {
+                    "type": "string",
+                    "example": "transfer"
+                  },
+                  "args": {
+                    "type": "object",
+                    "example": {
+                      "from": "alice",
+                      "to": "bob",
+                      "quantity": "10.0000 UPC",
+                      "memo": "thanks"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Binary action result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "binargs": {
+                      "type": "string",
+                      "description": "Encoded binary representation",
+                      "example": "0000000000000000000000000000000000000000"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/abi_bin_to_json": {
+      "post": {
+        "tags": [
+          "Chain APIs"
+        ],
+        "description": "Converts binary action arguments back to JSON format using ABI.",
+        "operationId": "abi_bin_to_json",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "code",
+                  "action",
+                  "binargs"
+                ],
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "example": "upcx.token"
+                  },
+                  "action": {
+                    "type": "string",
+                    "example": "transfer"
+                  },
+                  "binargs": {
+                    "type": "string",
+                    "example": "0000000000000000000000000000000000000000"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Decoded JSON arguments",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "args": {
+                      "type": "object",
+                      "example": {
+                        "from": "alice",
+                        "to": "bob",
+                        "quantity": "10.0000 UPC",
+                        "memo": "thanks"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get_code": {
+      "post": {
+        "tags": [
+          "Chain APIs"
+        ],
+        "description": "Retrieves the smart contract code and metadata for an account.",
+        "operationId": "get_code",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "account_name"
+                ],
+                "properties": {
+                  "account_name": {
+                    "type": "string",
+                    "example": "upcx.token"
+                  },
+                  "code_as_wasm": {
+                    "type": "boolean",
+                    "default": false
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Code information",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "account_name": {
+                      "type": "string",
+                      "example": "upcx.token"
+                    },
+                    "code_hash": {
+                      "type": "string",
+                      "example": "abcdef1234567890abcdef1234567890abcdef"
+                    },
+                    "wasm": {
+                      "type": "string",
+                      "description": "Raw WASM (if `code_as_wasm` is true)",
+                      "example": "AGFzbQEAAAABBgFgAX8BfwMCAQA="
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get_raw_abi": {
+      "post": {
+        "tags": [
+          "Chain APIs"
+        ],
+        "description": "Returns raw ABI in binary form for the given account.",
+        "operationId": "get_raw_abi",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "account_name"
+                ],
+                "properties": {
+                  "account_name": {
+                    "type": "string",
+                    "example": "upcx.token"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Raw ABI",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "account_name": {
+                      "type": "string",
+                      "example": "upcx.token"
+                    },
+                    "abi": {
+                      "type": "string",
+                      "description": "ABI in hex or binary format",
+                      "example": "0f1e2d3c..."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get_activated_protocol_features": {
+      "post": {
+        "tags": [
+          "Chain APIs"
+        ],
+        "description": "Retreives the activated protocol features for producer node",
+        "operationId": "get_activated_protocol_features",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "params"
+                ],
+                "properties": {
+                  "params": {
+                    "type": "object",
+                    "description": "Defines the filters to retreive the protocol features by",
+                    "required": [
+                      "search_by_block_num",
+                      "reverse"
+                    ],
+                    "properties": {
+                      "lower_bound": {
+                        "type": "integer",
+                        "description": "Lower bound"
+                      },
+                      "upper_bound": {
+                        "type": "integer",
+                        "description": "Upper bound"
+                      },
+                      "limit": {
+                        "type": "integer",
+                        "description": "The limit, default is 10"
+                      },
+                      "search_by_block_num": {
+                        "type": "boolean",
+                        "description": "Flag to indicate it is has to search by block number"
+                      },
+                      "reverse": {
+                        "type": "boolean",
+                        "description": "Flag to indicate it has to search in reverse"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Returns activated protocol features",
+                  "required": [
+                    "activated_protocol_features"
+                  ],
+                  "properties": {
+                    "activated_protocol_features": {
+                      "type": "array",
+                      "description": "Variant type, an array of strings with the activated protocol features",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "more": {
+                      "type": "integer",
+                      "description": "In case there's more activated protocol features than the input parameter `limit` requested, returns the ordinal of the next activated protocol feature which was not returned, otherwise zero."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get_accounts_by_authorizers": {
+      "post": {
+        "tags": [
+          "Chain APIs"
+        ],
+        "description": "Returns accounts associated with specific authorizers (keys or permissions).",
+        "operationId": "get_accounts_by_authorizers",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "accounts"
+                ],
+                "properties": {
+                  "accounts": {
+                    "type": "array",
+                    "description": "List of authorizers (keys or permissions)",
+                    "items": {
+                      "type": "object",
+                      "oneOf": [
+                        {
+                          "properties": {
+                            "key": {
+                              "type": "string",
+                              "example": "UPC6MRy..."
+                            }
+                          }
+                        },
+                        {
+                          "properties": {
+                            "permission": {
+                              "type": "object",
+                              "properties": {
+                                "actor": {
+                                  "type": "string",
+                                  "example": "alice"
+                                },
+                                "permission": {
+                                  "type": "string",
+                                  "example": "active"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of matching accounts",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "accounts": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "example": "alice"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/net/connections": {
+      "post": {
+        "tags": [
+          "Net APIs"
+        ],
+        "summary": "List active P2P network connections",
+        "description": "Returns information about current P2P connections.",
+        "operationId": "list_connections",
+        "responses": {
+          "200": {
+            "description": "Active connections list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "peer": {
+                        "type": "string",
+                        "example": "peer1.blockchain.net:9876"
+                      },
+                      "connection_time": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-03-26T12:00:00Z"
+                      },
+                      "last_handshake": {
+                        "type": "object",
+                        "properties": {
+                          "network_version": {
+                            "type": "integer",
+                            "example": 1200
+                          },
+                          "chain_id": {
+                            "type": "string",
+                            "example": "cf057bbfb726..."
+                          },
+                          "head_block_num": {
+                            "type": "integer",
+                            "example": 10000
+                          },
+                          "head_block_time": {
+                            "type": "string",
+                            "format": "date-time",
+                            "example": "2024-03-26T11:59:59Z"
+                          },
+                          "head_block_producer": {
+                            "type": "string",
+                            "example": "upcx"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/net/connect": {
+      "post": {
+        "tags": [
+          "Net APIs"
+        ],
+        "summary": "connect",
+        "description": "Initiate a connection to a specified peer.",
+        "operationId": "connect",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "endpoint"
+                ],
+                "properties": {
+                  "endpoint": {
+                    "type": "string",
+                    "description": "the endpoint to connect to expressed as either IP address or URL"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "description": "\"already connected\" or \"added connection\""
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/net/disconnect": {
+      "post": {
+        "tags": [
+          "Net APIs"
+        ],
+        "summary": "disconnect",
+        "description": "Initiate disconnection from a specified peer.",
+        "operationId": "disconnect",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "endpoint"
+                ],
+                "properties": {
+                  "endpoint": {
+                    "type": "string",
+                    "description": "the endpoint to disconnect from, expressed as either IP address or URL"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "description": "\"connection removed\" or \"no known connection for host\""
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/net/status": {
+      "post": {
+        "tags": [
+          "Net APIs"
+        ],
+        "summary": "status",
+        "description": "Retrieves the connection status for a specified peer.",
+        "operationId": "status",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "endpoint"
+                ],
+                "properties": {
+                  "endpoint": {
+                    "type": "string",
+                    "description": "The endpoint to get the status for, expressed as either IP address or URL"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "peer": {
+                      "type": "string",
+                      "description": "The IP address or URL of the peer"
+                    },
+                    "connecting": {
+                      "type": "boolean",
+                      "description": "True if the peer is connecting, otherwise false"
+                    },
+                    "syncing": {
+                      "type": "boolean",
+                      "description": "True if the peer is syncing, otherwise false"
+                    },
+                    "last_handshake": {
+                      "type": "object",
+                      "description": "Structure holding detailed information about the connection",
+                      "properties": {
+                        "network_version": {
+                          "type": "integer",
+                          "description": "Incremental value above a computed base"
+                        },
+                        "chain_id": {
+                          "type": "string",
+                          "format": "sha256",
+                          "example": "cf057bbfb726..."
+                        },
+                        "node_id": {
+                          "type": "string",
+                          "format": "sha256",
+                          "example": "cf057bbfb726..."
+                        },
+                        "key": {
+                          "type": "string",
+                          "format": "public_key",
+                          "example": "UPC6MRy..."
+                        },
+                        "time": {
+                          "type": "string",
+                          "format": "date-time",
+                          "description": "Timestamp in ISO 8601 format",
+                          "example": "2024-03-26T12:00:00Z"
+                        },
+                        "token": {
+                          "type": "string",
+                          "format": "sha256",
+                          "example": "cf057bbfb726..."
+                        },
+                        "sig": {
+                          "type": "string",
+                          "format": "signature",
+                          "example": "SIG_K1_Kabcd..."
+                        },
+                        "p2p_address": {
+                          "type": "string",
+                          "description": "IP address or URL of the peer"
+                        },
+                        "last_irreversible_block_num": {
+                          "type": "integer",
+                          "description": "Last irreversible block number",
+                          "example": 102345
+                        },
+                        "last_irreversible_block_id": {
+                          "type": "string",
+                          "format": "sha256",
+                          "example": "abcd1234..."
+                        },
+                        "head_num": {
+                          "type": "integer",
+                          "description": "Head number",
+                          "example": 123456
+                        },
+                        "head_id": {
+                          "type": "string",
+                          "format": "sha256",
+                          "example": "abcd1234..."
+                        },
+                        "os": {
+                          "type": "string",
+                          "description": "Operating system name",
+                          "example": "linux"
+                        },
+                        "agent": {
+                          "type": "string",
+                          "description": "Agent name",
+                          "example": "upcx/2.1.0"
+                        },
+                        "generation": {
+                          "type": "integer",
+                          "description": "Generation number",
+                          "example": 1
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/producer/pause": {
+      "post": {
+        "tags": [
+          "Producer APIs"
+        ],
+        "summary": "pause",
+        "description": "Pause producer node",
+        "operationId": "pause",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean",
+                  "description": "returns status"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/producer/resume": {
+      "post": {
+        "tags": [
+          "Producer APIs"
+        ],
+        "summary": "resume",
+        "description": "Resume producer node",
+        "operationId": "resume",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "description": "Resumes activity for producer"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Returns Nothing"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/producer/paused": {
+      "post": {
+        "tags": [
+          "Producer APIs"
+        ],
+        "summary": "paused",
+        "description": "Retreives paused status for producer node",
+        "operationId": "paused",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean",
+                  "description": "True if producer is paused, false otherwise"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/producer/get_runtime_options": {
+      "post": {
+        "tags": [
+          "Producer APIs"
+        ],
+        "summary": "get_runtime_options",
+        "description": "Retreives run time options for producer node",
+        "operationId": "get_runtime_options",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Returns run time options set for the producer",
+                  "properties": {
+                    "max_transaction_time": {
+                      "type": "integer",
+                      "description": "Max transaction time"
+                    },
+                    "max_irreversible_block_age": {
+                      "type": "integer",
+                      "description": "Max irreversible block age"
+                    },
+                    "produce_time_offset_us": {
+                      "type": "integer",
+                      "description": "Time offset"
+                    },
+                    "last_block_time_offset_us": {
+                      "type": "integer",
+                      "description": "Last block time offset"
+                    },
+                    "max_scheduled_transaction_time_per_block_ms": {
+                      "type": "integer",
+                      "description": "Max scheduled transaction time per block in ms"
+                    },
+                    "subjective_cpu_leeway_us": {
+                      "type": "integer",
+                      "description": "Subjective CPU leeway"
+                    },
+                    "incoming_defer_ratio": {
+                      "type": "integer",
+                      "description": "Incoming defer ration"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/producer/update_runtime_options": {
+      "post": {
+        "tags": [
+          "Producer APIs"
+        ],
+        "summary": "update_runtime_options",
+        "description": "Update run time options for producer node",
+        "operationId": "update_runtime_options",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "options"
+                ],
+                "properties": {
+                  "options": {
+                    "type": "object",
+                    "description": "Defines the run time options to set for the producer",
+                    "properties": {
+                      "max_transaction_time": {
+                        "type": "integer",
+                        "description": "Max transaction time"
+                      },
+                      "max_irreversible_block_age": {
+                        "type": "integer",
+                        "description": "Max irreversible block age"
+                      },
+                      "produce_time_offset_us": {
+                        "type": "integer",
+                        "description": "Time offset"
+                      },
+                      "last_block_time_offset_us": {
+                        "type": "integer",
+                        "description": "Last block time offset"
+                      },
+                      "max_scheduled_transaction_time_per_block_ms": {
+                        "type": "integer",
+                        "description": "Max scheduled transaction time per block in ms"
+                      },
+                      "subjective_cpu_leeway_us": {
+                        "type": "integer",
+                        "description": "Subjective CPU leeway"
+                      },
+                      "incoming_defer_ratio": {
+                        "type": "integer",
+                        "description": "Incoming defer ration"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Returns Nothing"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/producer/get_greylist": {
+      "post": {
+        "tags": [
+          "Producer APIs"
+        ],
+        "summary": "Get greylist",
+        "description": "Retrieves the greylist from the producer node.",
+        "operationId": "get_greylist",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of greylisted accounts",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "example": "alice"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/producer/add_greylist_accounts": {
+      "post": {
+        "tags": [
+          "Producer APIs"
+        ],
+        "summary": "Add to greylist",
+        "description": "Adds accounts to the greylist on the producer node.",
+        "operationId": "add_greylist_accounts",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "accounts"
+                ],
+                "properties": {
+                  "accounts": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "example": "alice"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Accounts added to greylist",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean",
+                  "example": true
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/producer/remove_greylist_accounts": {
+      "post": {
+        "tags": [
+          "Producer APIs"
+        ],
+        "summary": "Remove from greylist",
+        "description": "Removes accounts from the greylist on the producer node.",
+        "operationId": "remove_greylist_accounts",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "accounts"
+                ],
+                "properties": {
+                  "accounts": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "example": "alice"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Accounts removed from greylist",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean",
+                  "example": true
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/producer/get_whitelist_blacklist": {
+      "post": {
+        "tags": [
+          "Producer APIs"
+        ],
+        "summary": "get_whitelist_blacklist",
+        "description": "Retrieves the whitelist and blacklist settings from the producer node.",
+        "operationId": "get_whitelist_blacklist",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Defines the actor whitelist and blacklist, contract whitelist and blacklist, action blacklist and key blacklist",
+                  "properties": {
+                    "actor_whitelist": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "description": "UPCX-style account name (1-12 characters)",
+                        "example": "alice"
+                      }
+                    },
+                    "actor_blacklist": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "description": "UPCX-style account name (1-12 characters)",
+                        "example": "bob"
+                      }
+                    },
+                    "contract_whitelist": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "description": "Contract account name",
+                        "example": "mycontract"
+                      }
+                    },
+                    "contract_blacklist": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "description": "Contract account name",
+                        "example": "blockedcontract"
+                      }
+                    },
+                    "action_blacklist": {
+                      "type": "array",
+                      "items": {
+                        "type": "array",
+                        "description": "Array of two strings",
+                        "items": {
+                          "type": "string",
+                          "example": "upcx.token"
+                        }
+                      }
+                    },
+                    "key_blacklist": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "description": "Public key in UPCX format",
+                        "example": "UPC6MRyAjQq8ud7hVNYcfnVPJqcVpscN5SoW5SLz3Eui4YcAsvU5L"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/producer/set_whitelist_blacklist": {
+      "post": {
+        "tags": [
+          "Producer APIs"
+        ],
+        "summary": "set_whitelist_blacklist",
+        "description": "Sets the white list and black list for producer node",
+        "operationId": "set_whitelist_blacklist",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "params"
+                ],
+                "properties": {
+                  "params": {
+                    "type": "object",
+                    "description": "Defines the actor whitelist and blacklist, the contract whitelist and blacklist, the action blacklist and key blacklist",
+                    "properties": {
+                      "actor_whitelist": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "description": "UPCX-style account name",
+                          "example": "alice"
+                        }
+                      },
+                      "actor_blacklist": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "description": "UPCX-style account name",
+                          "example": "bob"
+                        }
+                      },
+                      "contract_whitelist": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "description": "Contract account name",
+                          "example": "mycontract"
+                        }
+                      },
+                      "contract_blacklist": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "description": "Contract account name",
+                          "example": "badcontract"
+                        }
+                      },
+                      "action_blacklist": {
+                        "type": "array",
+                        "items": {
+                          "type": "array",
+                          "description": "Array of [account_name, action_name]",
+                          "items": {
+                            "type": "string",
+                            "example": "upcx.token"
+                          }
+                        }
+                      },
+                      "key_blacklist": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "description": "UPCX public key",
+                          "example": "UPC6MRyAjQq8ud7hVNYcfnVPJqcVpscN5SoW5SLz3Eui4YcAsvU5L"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Returns nothing (empty object)",
+                  "example": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/producer/create_snapshot": {
+      "post": {
+        "tags": [
+          "Producer APIs"
+        ],
+        "summary": "create_snapshot",
+        "description": "Creates a snapshot for producer node",
+        "operationId": "create_snapshot",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "next"
+                ],
+                "properties": {
+                  "next": {
+                    "type": "object",
+                    "description": "Defines the snapshot to be created",
+                    "required": [
+                      "head_block_id",
+                      "head_block_num",
+                      "head_block_time",
+                      "version",
+                      "snapshot_name"
+                    ],
+                    "properties": {
+                      "head_block_id": {
+                        "type": "string",
+                        "format": "sha256",
+                        "description": "ID of the head block (as sha256 hash)",
+                        "example": "cf057bbfb72602e0..."
+                      },
+                      "head_block_num": {
+                        "type": "integer",
+                        "description": "Highest block number on the chain",
+                        "example": 150000
+                      },
+                      "head_block_time": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Highest block timestamp",
+                        "example": "2024-03-26T13:00:00Z"
+                      },
+                      "version": {
+                        "type": "integer",
+                        "description": "Version number",
+                        "example": 1
+                      },
+                      "snapshot_name": {
+                        "type": "string",
+                        "description": "The name of the snapshot",
+                        "example": "snapshot-20240326T130000"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Returns nothing (empty object)",
+                  "example": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/producer/get_integrity_hash": {
+      "post": {
+        "tags": [
+          "Producer APIs"
+        ],
+        "summary": "Get integrity hash",
+        "description": "Returns the integrity hash of the current blockchain state.",
+        "operationId": "get_integrity_hash",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Integrity hash response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "integrity_hash": {
+                      "type": "string",
+                      "example": "abc123def456"
+                    },
+                    "head_block_id": {
+                      "type": "string",
+                      "example": "0002a4..."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/producer/schedule_protocol_feature_activations": {
+      "post": {
+        "tags": [
+          "Producer APIs"
+        ],
+        "summary": "schedule_protocol_feature_activations",
+        "description": "Schedule protocol feature activation for producer node",
+        "operationId": "schedule_protocol_feature_activations",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "schedule"
+                ],
+                "properties": {
+                  "schedule": {
+                    "type": "object",
+                    "required": [
+                      "protocol_features_to_activate"
+                    ],
+                    "properties": {
+                      "protocol_features_to_activate": {
+                        "type": "array",
+                        "description": "List of protocol features to activate (as sha256 hashes)",
+                        "items": {
+                          "type": "string",
+                          "format": "sha256",
+                          "example": "0ec8f5766a2c47d4a96f8a5c4814e2bb002e6a58d45a8cfcf82b6ef4fc1c8d1c"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Returns nothing (empty object)",
+                  "example": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/producer/get_supported_protocol_features": {
+      "post": {
+        "tags": [
+          "Producer APIs"
+        ],
+        "summary": "get_supported_protocol_features",
+        "description": "Retreives supported protocol features for producer node",
+        "operationId": "get_supported_protocol_features",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "params"
+                ],
+                "properties": {
+                  "params": {
+                    "type": "object",
+                    "description": "Defines filters based on which to return the supported protocol features",
+                    "properties": {
+                      "exclude_disabled": {
+                        "type": "boolean",
+                        "description": "Exclude disabled protocol features"
+                      },
+                      "exclude_unactivatable": {
+                        "type": "boolean",
+                        "description": "Exclude unactivatable protocol features"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "description": "Variant type, an array of strings with the supported protocol features",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/trace_api/get_block": {
+      "post": {
+        "tags": [
+          "Trace APIs"
+        ],
+        "description": "Returns a block trace object containing retired actions and related metadata.",
+        "operationId": "get_block_trace",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "block_num"
+                ],
+                "properties": {
+                  "block_num": {
+                    "type": "integer",
+                    "description": "Provide a block number",
+                    "example": 123456
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK - valid response payload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "description": "BlockTraceV0",
+                      "properties": {
+                        "block_num": {
+                          "type": "integer",
+                          "example": 123456
+                        },
+                        "id": {
+                          "type": "string",
+                          "format": "sha256",
+                          "example": "0001a2b3c4d5..."
+                        },
+                        "producer_block_id": {
+                          "type": "string",
+                          "format": "sha256",
+                          "example": "0001a2b3c4d5..."
+                        },
+                        "trace_actions": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "receiver": {
+                                "type": "string",
+                                "example": "upcx.token"
+                              },
+                              "act": {
+                                "type": "object",
+                                "properties": {
+                                  "account": {
+                                    "type": "string",
+                                    "example": "upcx.token"
+                                  },
+                                  "name": {
+                                    "type": "string",
+                                    "example": "transfer"
+                                  },
+                                  "data": {
+                                    "type": "object",
+                                    "example": {
+                                      "from": "alice",
+                                      "to": "bob",
+                                      "quantity": "5.0000 UPC",
+                                      "memo": "trace"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "description": "BlockTraceV1 (with extra features)",
+                      "properties": {
+                        "block_num": {
+                          "type": "integer",
+                          "example": 123456
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "0001a2b3c4d5..."
+                        },
+                        "producer_block_id": {
+                          "type": "string",
+                          "example": "0001a2b3c4d5..."
+                        },
+                        "trace_actions": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "receiver": {
+                                "type": "string",
+                                "example": "upcx.token"
+                              },
+                              "global_sequence": {
+                                "type": "integer",
+                                "example": 12345
+                              },
+                              "block_time": {
+                                "type": "string",
+                                "format": "date-time",
+                                "example": "2024-03-26T12:34:56Z"
+                              },
+                              "act": {
+                                "type": "object",
+                                "properties": {
+                                  "account": {
+                                    "type": "string",
+                                    "example": "upcx.token"
+                                  },
+                                  "name": {
+                                    "type": "string",
+                                    "example": "transfer"
+                                  },
+                                  "authorization": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "actor": {
+                                          "type": "string",
+                                          "example": "alice"
+                                        },
+                                        "permission": {
+                                          "type": "string",
+                                          "example": "active"
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "data": {
+                                    "type": "object",
+                                    "example": {
+                                      "from": "alice",
+                                      "to": "bob",
+                                      "quantity": "5.0000 UPC",
+                                      "memo": "trace"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error - requested block number is invalid (not a number, larger than max int)"
+          },
+          "404": {
+            "description": "Error - requested data not present on node"
+          },
+          "500": {
+            "description": "Error - exceptional condition while processing get_block; e.g. corrupt files"
+          }
+        }
+      }
+    },
+    "/db_size/get": {
+      "post": {
+        "tags": [
+          "DB Size APIs"
+        ],
+        "summary": "get",
+        "description": "Retrieves database stats",
+        "operationId": "get",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Defines the database stats",
+                  "properties": {
+                    "free_bytes": {
+                      "type": "integer"
+                    },
+                    "used_bytes": {
+                      "type": "integer"
+                    },
+                    "size": {
+                      "type": "integer"
+                    },
+                    "indices": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "index": {
+                            "type": "string"
+                          },
+                          "row_count": {
+                            "type": "integer"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

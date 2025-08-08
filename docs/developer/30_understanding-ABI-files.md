@@ -39,7 +39,7 @@ Start with an empty ABI, name it `upcx.token.abi`
 An ABI enables any client or interface to interpret and even generate a GUI for your contract. For this to work consistently, describe the custom types that are used as a parameter in any public action or struct that needs to be described in the ABI.
 
 [[info | Built-in Types]]
-| UPCX implements a number of custom built-ins. Built-in types don't need to be described in an ABI file. If you would like to familiarize yourself with UPCX's built-ins, they are defined [here](https://github.com/UPCX-TEAM-B/upcx/blob/de78b49b5765c88f4e005046d1489c3905985b94/libraries/chain/abi_serializer.cpp#L89-L127)
+| UPCX implements a number of custom built-ins. Built-in types don't need to be described in an ABI file. If you would like to familiarize yourself with UPCX's built-ins, they are defined [here](https://github.com/UPCX-Core/upcx/blob/de78b49b5765c88f4e005046d1489c3905985b94/libraries/chain/abi_serializer.cpp#L89-L127)
 
 ```json
 {
@@ -207,7 +207,7 @@ The following structs are implicit in that a struct was never explicitly defined
 
 These structs are explicitly defined, as they are a requirement to instantiate a multi-index table. Describing them is no different than defining the implicit structs as demonstrated above.
 
-### [account](https://github.com/UPCX-TEAM-B/upcx.contracts/blob/f6578c45c83ec60826e6a1eeb9ee71de85abe976/contracts/upcx.token/include/upcx.token/upcx.token.hpp#L120)
+### [account](https://github.com/UPCX-Core/upcx.contracts/blob/f6578c45c83ec60826e6a1eeb9ee71de85abe976/contracts/upcx.token/include/upcx.token/upcx.token.hpp#L120)
 
 ```json
 {
@@ -234,13 +234,13 @@ An action's JSON object definition looks like the following:
 }
 ```
 
-Describe the actions of the `upcx.token` contract by aggregating all the public functions described in the `upcx.token` contract's [header file](https://github.com/UPCX-TEAM-B/upcx.contracts/blob/f6578c45c83ec60826e6a1eeb9ee71de85abe976/contracts/upcx.token/include/upcx.token/upcx.token.hpp#L1).
+Describe the actions of the `upcx.token` contract by aggregating all the public functions described in the `upcx.token` contract's [header file](https://github.com/UPCX-Core/upcx.contracts/blob/f6578c45c83ec60826e6a1eeb9ee71de85abe976/contracts/upcx.token/include/upcx.token/upcx.token.hpp#L1).
 
 Then describe each action's _type_ according to its previously described struct. In most situations, the function name and the struct name will be equal, but are not required to be equal.
 
 Below is a list of actions that link to their source code with example JSON provided for how each action would be described.
 
-### [create](https://github.com/UPCX-TEAM-B/upcx.contracts/blob/f6578c45c83ec60826e6a1eeb9ee71de85abe976/contracts/upcx.token/include/upcx.token/upcx.token.hpp#L35-L37)
+### [create](https://github.com/UPCX-Core/upcx.contracts/blob/f6578c45c83ec60826e6a1eeb9ee71de85abe976/contracts/upcx.token/include/upcx.token/upcx.token.hpp#L35-L37)
 
 ```json
 {
@@ -250,7 +250,7 @@ Below is a list of actions that link to their source code with example JSON prov
 }
 ```
 
-### [issue](https://github.com/UPCX-TEAM-B/upcx.contracts/blob/f6578c45c83ec60826e6a1eeb9ee71de85abe976/contracts/upcx.token/include/upcx.token/upcx.token.hpp#L45-L46)
+### [issue](https://github.com/UPCX-Core/upcx.contracts/blob/f6578c45c83ec60826e6a1eeb9ee71de85abe976/contracts/upcx.token/include/upcx.token/upcx.token.hpp#L45-L46)
 
 ```json
 {
@@ -260,7 +260,7 @@ Below is a list of actions that link to their source code with example JSON prov
 }
 ```
 
-### [retire](https://github.com/UPCX-TEAM-B/upcx.contracts/blob/f6578c45c83ec60826e6a1eeb9ee71de85abe976/contracts/upcx.token/include/upcx.token/upcx.token.hpp#L55-L56)
+### [retire](https://github.com/UPCX-Core/upcx.contracts/blob/f6578c45c83ec60826e6a1eeb9ee71de85abe976/contracts/upcx.token/include/upcx.token/upcx.token.hpp#L55-L56)
 
 ```json
 {
@@ -270,7 +270,7 @@ Below is a list of actions that link to their source code with example JSON prov
 }
 ```
 
-### [transfer](https://github.com/UPCX-TEAM-B/upcx.contracts/blob/f6578c45c83ec60826e6a1eeb9ee71de85abe976/contracts/upcx.token/include/upcx.token/upcx.token.hpp#L67-L71)
+### [transfer](https://github.com/UPCX-Core/upcx.contracts/blob/f6578c45c83ec60826e6a1eeb9ee71de85abe976/contracts/upcx.token/include/upcx.token/upcx.token.hpp#L67-L71)
 
 ```json
 {
@@ -280,7 +280,7 @@ Below is a list of actions that link to their source code with example JSON prov
 }
 ```
 
-### [close](https://github.com/UPCX-TEAM-B/upcx.contracts/blob/f6578c45c83ec60826e6a1eeb9ee71de85abe976/contracts/upcx.token/include/upcx.token/upcx.token.hpp#L96-L97)
+### [close](https://github.com/UPCX-Core/upcx.contracts/blob/f6578c45c83ec60826e6a1eeb9ee71de85abe976/contracts/upcx.token/include/upcx.token/upcx.token.hpp#L96-L97)
 
 ```json
 {
@@ -304,9 +304,9 @@ Here's a table's JSON object definition:
 }
 ```
 
-The upcx.token contract instantiates two tables, [accounts](https://github.com/UPCX-TEAM-B/upcx.contracts/blob/f6578c45c83ec60826e6a1eeb9ee71de85abe976/contracts/upcx.token/include/upcx.token/upcx.token.hpp#L134) and [stat](https://github.com/UPCX-TEAM-B/upcx.contracts/blob/f6578c45c83ec60826e6a1eeb9ee71de85abe976/contracts/upcx.token/include/upcx.token/upcx.token.hpp#L135).
+The upcx.token contract instantiates two tables, [accounts](https://github.com/UPCX-Core/upcx.contracts/blob/f6578c45c83ec60826e6a1eeb9ee71de85abe976/contracts/upcx.token/include/upcx.token/upcx.token.hpp#L134) and [stat](https://github.com/UPCX-Core/upcx.contracts/blob/f6578c45c83ec60826e6a1eeb9ee71de85abe976/contracts/upcx.token/include/upcx.token/upcx.token.hpp#L135).
 
-The `accounts` table is an i64 index, based on the [`account` struct](https://github.com/UPCX-TEAM-B/upcx.contracts/blob/f6578c45c83ec60826e6a1eeb9ee71de85abe976/contracts/upcx.token/include/upcx.token/upcx.token.hpp#L120-L124), has a [`uint64` as it's primary key](https://github.com/UPCX-TEAM-B/upcx.contracts/blob/f6578c45c83ec60826e6a1eeb9ee71de85abe976/contracts/upcx.token/include/upcx.token/upcx.token.hpp#L123)
+The `accounts` table is an i64 index, based on the [`account` struct](https://github.com/UPCX-Core/upcx.contracts/blob/f6578c45c83ec60826e6a1eeb9ee71de85abe976/contracts/upcx.token/include/upcx.token/upcx.token.hpp#L120-L124), has a [`uint64` as it's primary key](https://github.com/UPCX-Core/upcx.contracts/blob/f6578c45c83ec60826e6a1eeb9ee71de85abe976/contracts/upcx.token/include/upcx.token/upcx.token.hpp#L123)
 
 Here's how the accounts table would be described in the ABI
 
@@ -320,7 +320,7 @@ Here's how the accounts table would be described in the ABI
 }
 ```
 
-The `stats` table is an i64 index, based on the [`currency_stats` struct](https://github.com/UPCX-TEAM-B/upcx.contracts/blob/f6578c45c83ec60826e6a1eeb9ee71de85abe976/contracts/upcx.token/include/upcx.token/upcx.token.hpp#L126-L132), has a [`uint64` as it's primary key](https://github.com/UPCX-TEAM-B/upcx.contracts/blob/f6578c45c83ec60826e6a1eeb9ee71de85abe976/contracts/upcx.token/include/upcx.token/upcx.token.hpp#L131)
+The `stats` table is an i64 index, based on the [`currency_stats` struct](https://github.com/UPCX-Core/upcx.contracts/blob/f6578c45c83ec60826e6a1eeb9ee71de85abe976/contracts/upcx.token/include/upcx.token/upcx.token.hpp#L126-L132), has a [`uint64` as it's primary key](https://github.com/UPCX-Core/upcx.contracts/blob/f6578c45c83ec60826e6a1eeb9ee71de85abe976/contracts/upcx.token/include/upcx.token/upcx.token.hpp#L131)
 
 Here's how the stats table would be described in the ABI
 
@@ -519,7 +519,7 @@ When describing a vector in your ABI file, simply append the type with `[]`, so 
 
 It's a rarely used property worth mentioning. You can use **base** ABI struct property to reference another struct for inheritance, as long as that struct is also described in the same ABI file. Base will do nothing or potentially throw an error if your smart contract logic does not support inheritance.
 
-You can see an example of base in use in the system contract [source code](https://github.com/UPCX-TEAM-B/upcx.contracts/blob/4e4a3ca86d5d3482dfac85182e69f33c49e62fa9/upcx.system/include/upcx.system/upcx.system.hpp#L46) and [ABI](https://github.com/UPCX-TEAM-B/upcx.contracts/blob/4e4a3ca86d5d3482dfac85182e69f33c49e62fa9/upcx.system/abi/upcx.system.abi#L262)
+You can see an example of base in use in the system contract [source code](https://github.com/UPCX-Core/upcx.contracts/blob/4e4a3ca86d5d3482dfac85182e69f33c49e62fa9/upcx.system/include/upcx.system/upcx.system.hpp#L46) and [ABI](https://github.com/UPCX-Core/upcx.contracts/blob/4e4a3ca86d5d3482dfac85182e69f33c49e62fa9/upcx.system/abi/upcx.system.abi#L262)
 
 ### Extra ABI Properties
 

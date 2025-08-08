@@ -97,7 +97,7 @@ const config: Config = {
         /* { to: "/blog", label: "Blog", position: "left" },*/
         /* { href: "https://docs.upcx.org/api", label: "API", position: "left" },*/
         {
-          href: "https://github.com/UPCX-TEAM-B",
+          href: "https://github.com/UPCX-Core",
           label: "GitHub",
           position: "right",
         },
@@ -156,7 +156,7 @@ const config: Config = {
           items: [
             {
               label: "GitHub",
-              href: "https://github.com/UPCX-TEAM-B",
+              href: "https://github.com/UPCX-Core",
             },
           ],
         },
