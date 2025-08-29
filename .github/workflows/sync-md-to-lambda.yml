@@ -53,11 +53,16 @@ jobs:
       - name: Invoke AWS Lambda
         if: ${{ steps.payload.outputs.files != '[]' }}
         run: |
+          # Save payload to file
+          echo '${{ steps.payload.outputs.payload }}' > payload.json
+
+          # Invoke Lambda with file input
           aws lambda invoke \
             --function-name "$AWS_LAMBDA_FUNCTION_NAME" \
             --region "$AWS_REGION" \
-            --payload "$PAYLOAD" \
+            --payload file://payload.json \
             response.json
+
           cat response.json
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
