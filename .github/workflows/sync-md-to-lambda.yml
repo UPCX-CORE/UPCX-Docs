@@ -22,11 +22,19 @@ jobs:
       - name: Prepare Markdown payload
         id: payload
         run: |
+          # Get changed Markdown files
           files=$(git diff ${{ github.event.before }} ${{ github.sha }} --name-only | grep '\.md$' || true)
+
+          # Convert to JSON array safely
           files_json=$(printf '%s\n' "$files" | jq -R . | jq -s .)
+
+          # Ensure valid JSON even if empty
           files_json=${files_json:-"[]"}
+
+          # Escape newlines to safely write to $GITHUB_OUTPUT
+          payload=$(jq -n --argjson files "$files_json" '{files: $files}' | jq -c .)
+
           echo "files=$files_json" >> $GITHUB_OUTPUT
-          payload=$(jq -n --argjson files "$files_json" '{files: $files}')
           echo "payload=$payload" >> $GITHUB_OUTPUT
         shell: bash
 
