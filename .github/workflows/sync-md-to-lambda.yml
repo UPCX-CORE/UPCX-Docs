@@ -18,15 +18,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      # 2. Install AWS CLI v2
-      - name: Install AWS CLI
-        run: |
-          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-          unzip awscliv2.zip
-          sudo ./aws/install
-          aws --version
-
-      # 3. Prepare list of changed Markdown files
+      # 2. Prepare list of changed Markdown files
       - name: Prepare Markdown payload
         id: payload
         run: |
@@ -38,7 +30,7 @@ jobs:
           echo "payload=$payload" >> $GITHUB_OUTPUT
         shell: bash
 
-      # 4. Invoke AWS Lambda
+      # 3. Invoke AWS Lambda using preinstalled AWS CLI
       - name: Invoke AWS Lambda
         run: |
           aws lambda invoke \
