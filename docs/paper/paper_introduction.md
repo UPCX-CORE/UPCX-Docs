@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # 02. Introduction
 
-Technological innovations and the rapid proliferation of digital devices have driven significant advancements, particularly in payment and financial services. Online and mobile payments have enabled individuals to access financial services from virtually anywhere, making transfers and transactions more convenient and secure. These innovations have accelerated the growth of the digital economy, making systems more profitable and efficient for both businesses and consumers.
+TTechnological innovations and the rapid proliferation of digital devices have driven significant advancements, particularly in payment and financial services. Online and mobile payments have enabled individuals to access financial services from virtually anywhere, making transfers and transactions more convenient and secure. These innovations have accelerated the growth of the digital economy, making systems more profitable and efficient for both businesses and consumers.
 
 The world is evolving faster and becoming more complex than we could imagine, creating a growing demand for more advanced payment methods.
 
