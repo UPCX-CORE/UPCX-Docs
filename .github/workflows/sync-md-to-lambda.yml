@@ -3,9 +3,9 @@ name: Sync Markdown to Lambda
 on:
   push:
     branches:
-      - main           # Only run on main branch
+      - main
     paths:
-      - '**/*.md'      # Only trigger on Markdown file changes
+      - '**/*.md'
 
 jobs:
   sync-markdown:
@@ -16,41 +16,40 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0   # Important: get full Git history for git diff
+          fetch-depth: 0
 
-      # 2. Prepare list of changed Markdown files
+      # 2. Install AWS CLI v2
+      - name: Install AWS CLI
+        run: |
+          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+          unzip awscliv2.zip
+          sudo ./aws/install
+          aws --version
+
+      # 3. Prepare list of changed Markdown files
       - name: Prepare Markdown payload
         id: payload
         run: |
-          # Get changed Markdown files between this commit and previous commit
           files=$(git diff ${{ github.event.before }} ${{ github.sha }} --name-only | grep '\.md$' || true)
-
-          # Convert to JSON array
           files_json=$(printf '%s\n' "$files" | jq -R . | jq -s .)
-
-          # Ensure valid JSON even if no files changed
           files_json=${files_json:-"[]"}
-
-          # Set outputs for next step
           echo "files=$files_json" >> $GITHUB_OUTPUT
           payload=$(jq -n --argjson files "$files_json" '{files: $files}')
           echo "payload=$payload" >> $GITHUB_OUTPUT
         shell: bash
 
-      # 3. Invoke AWS Lambda function
+      # 4. Invoke AWS Lambda
       - name: Invoke AWS Lambda
-        uses: aws-actions/aws-cli@v2
-        with:
-          args: lambda invoke \
-            --function-name ${{ secrets.AWS_LAMBDA_FUNCTION_NAME }} \
-            --region ${{ secrets.AWS_REGION }} \
-            --payload '${{ steps.payload.outputs.payload }}' \
+        run: |
+          aws lambda invoke \
+            --function-name "$AWS_LAMBDA_FUNCTION_NAME" \
+            --region "$AWS_REGION" \
+            --payload "$PAYLOAD" \
             response.json
+          cat response.json
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
-
-      # 4. Show Lambda response
-      - name: Show Lambda response
-        run: cat response.json
+          AWS_LAMBDA_FUNCTION_NAME: ${{ secrets.AWS_LAMBDA_FUNCTION_NAME }}
+          PAYLOAD: '${{ steps.payload.outputs.payload }}'
