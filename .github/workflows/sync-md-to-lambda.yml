@@ -49,19 +49,17 @@ jobs:
           exit 0
 
       # 4. Invoke AWS Lambda
-      - name: Invoke Lambda per file
+      - name: Invoke AWS Lambda
+        if: ${{ steps.payload.outputs.files != '[]' }}
         run: |
-          files=(${{ steps.payload.outputs.files }}) # array of filenames
-          for f in "${files[@]}"; do
-            echo "{\"files\":[\"$f\"]}" > payload.json
-            aws lambda invoke \
-              --function-name "$AWS_LAMBDA_FUNCTION_NAME" \
-              --region "$AWS_REGION" \
-              --cli-binary-format raw-in-base64-out \
-              --payload file://payload.json \
-              response.json
-            cat response.json
-          done
+          aws lambda invoke \
+            --function-name "$AWS_LAMBDA_FUNCTION_NAME" \
+            --region "$AWS_REGION" \
+            --cli-binary-format raw-in-base64-out \
+            --payload file://payload.json \
+            response.json
+
+          cat response.json
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
