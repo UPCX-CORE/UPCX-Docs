@@ -1,39 +1,25 @@
-name: Sync Markdown to Lambda
+name: Sync Markdown to Strapi
 
 on:
   push:
     paths:
-      - '**/*.md'
+      - '**/*.md'  # Trigger only when MD files change
 
 jobs:
-  sync-to-lambda:
+  sync-md:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout code
+      # Step 1: Checkout the repository
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v2
+      # Step 2: Invoke AWS Lambda to sync files
+      - name: Invoke Lambda
+        uses: aws-actions/aws-lambda-invoke@v1
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
-
-      - name: Prepare payload
-        id: payload
-        run: |
-          files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '\.md$' || echo "")
-          files_json=$(printf '%s\n' "$files" | jq -R . | jq -s .)
-          echo "files=$files_json" >> $GITHUB_OUTPUT
-
-          payload=$(jq -n --argjson files "$files_json" '{files: $files}')
-          echo "payload=$payload" >> $GITHUB_OUTPUT
-
-      - name: Invoke AWS Lambda
-        run: |
-          aws lambda invoke \
-            --function-name ${{ secrets.AWS_LAMBDA_FUNCTION_NAME }} \
-            --payload "${{ steps.payload.outputs.payload }}" \
-            response.json
-          
-          cat response.json
+          function-name: ${{ secrets.AWS_LAMBDA_FUNCTION_NAME }}
+          payload: |
+            {
+              "files": ${{ toJson(github.event.commits.*.modified) }}
+            }
