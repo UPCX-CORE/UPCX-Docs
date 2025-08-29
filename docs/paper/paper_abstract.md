@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # 01. Abstract
 
-UPC is a blockchain-based open-source payment system designed to become the de facto standard for next-generation payment solutions.
+UPCXX is a blockchain-based open-source payment system designed to become the de facto standard for next-generation payment solutions.
 
 The core features of UPCX include practical performance and scalability comparable to credit card and mobile payment systems, as well as fast **settlement finality**. The platform addresses various issues faced by traditional payment methods such as credit/debit cards and mobile payments, as well as existing blockchains like Bitcoin. It offers multiple functions that leverage the best aspects of these systems.
 
