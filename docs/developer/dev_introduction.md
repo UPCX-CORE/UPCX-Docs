@@ -4,7 +4,7 @@ sidebar_position: 0
 
 # 01. Introduction
 
-The12345678911111111 Smart Contract Guides section introduces many UPCX concepts used in smart contract development. Follow these tutorials and learn the core features of smart contract development. The tutorials take you step by step through each topic and at the end of each tutorial you will have the knowledge to apply these to your own smart contract.
+The123456789111111111 Smart Contract Guides section introduces many UPCX concepts used in smart contract development. Follow these tutorials and learn the core features of smart contract development. The tutorials take you step by step through each topic and at the end of each tutorial you will have the knowledge to apply these to your own smart contract.
 
 You will learn how to implement smart contracts with different functionalities such as token contracts, address book, payable actions, and more. You will gain advanced understanding on how data persistence works in the context of a smart contract and also how inline actions are implemented in a smart contract.
 
