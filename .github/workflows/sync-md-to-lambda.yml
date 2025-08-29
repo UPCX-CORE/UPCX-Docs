@@ -1,4 +1,4 @@
-name: Sync Markdown to Lambda
+name: Sync Markdown to AWS Lambda
 
 on:
   push:
@@ -12,34 +12,46 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout full repository
-      - name: Checkout repo
+      # 1. Checkout the repository
+      - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 0  # Needed for git diff to work
 
-      # 2. Prepare list of changed Markdown files
+      # 2. Prepare JSON payload of changed Markdown files
       - name: Prepare Markdown payload
         id: payload
         run: |
           # Get changed Markdown files
           files=$(git diff ${{ github.event.before }} ${{ github.sha }} --name-only | grep '\.md$' || true)
 
-          # Convert to JSON array safely
-          files_json=$(printf '%s\n' "$files" | jq -R . | jq -s .)
+          # Convert to compact JSON array
+          files_json=$(printf '%s\n' "$files" | jq -R . | jq -s -c .)
 
           # Ensure valid JSON even if empty
           files_json=${files_json:-"[]"}
 
-          # Escape newlines to safely write to $GITHUB_OUTPUT
+          # Build payload as compact JSON
           payload=$(jq -n --argjson files "$files_json" '{files: $files}' | jq -c .)
 
+          # Write safely to GitHub Actions outputs
           echo "files=$files_json" >> $GITHUB_OUTPUT
           echo "payload=$payload" >> $GITHUB_OUTPUT
-        shell: bash
 
-      # 3. Invoke AWS Lambda using preinstalled AWS CLI
+      # 3. Skip Lambda invocation if no Markdown files changed
+      - name: Check for changed files
+        if: ${{ steps.payload.outputs.files != '[]' }}
+        run: echo "Markdown files changed, proceeding to Lambda"
+
+      - name: Skip Lambda if no Markdown files changed
+        if: ${{ steps.payload.outputs.files == '[]' }}
+        run: |
+          echo "No Markdown files changed, skipping Lambda invocation."
+          exit 0
+
+      # 4. Invoke AWS Lambda
       - name: Invoke AWS Lambda
+        if: ${{ steps.payload.outputs.files != '[]' }}
         run: |
           aws lambda invoke \
             --function-name "$AWS_LAMBDA_FUNCTION_NAME" \
